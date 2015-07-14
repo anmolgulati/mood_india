@@ -151,11 +151,11 @@ def initializeGeoCode() :
 def main():
 	global scoreOfStates
 	initializeScoreDictionary()
-	# sentiDictionary=sentiReadWord('SentiWordNet_3.0.0_20100705.txt')
+	sentiDictionary=sentiReadWord('SentiWordNet_3.0.0_20100705.txt')
 	# bingNegativeWords=bingReadWords('negative-words.txt')
 	# bingPositiveWords=bingReadWords('positive-words.txt')
 	# print bingPositiveWords
-	affinDictionary = affinReadwords('AFINN-111.txt')
+	# affinDictionary = affinReadwords('AFINN-111.txt')
 	i = 0
 	initializeGeoCode()
 	print scoreOfStates
@@ -171,7 +171,7 @@ def main():
 					listOfTokens= normalize(TweetInfo['text'])
 					print listOfTokens
 					print ""
-					tweetScore = affinCalculateSentiment(listOfTokens,affinDictionary)
+					tweetScore = sentiCalculateSentiment(listOfTokens,sentiDictionary)
 					print tweetScore 
 					print type(tweetScore)
 					print ""
