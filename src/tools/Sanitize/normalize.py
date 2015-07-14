@@ -1,10 +1,12 @@
 import re,sys,string
 from nltk.corpus import stopwords
-from spell import correct
-from nltk.stem.lancaster import LancasterStemmer
+from SpellingCorrector.spell import correct
+import nltk.stem.lancaster
+
+# TODO Refactor code into static class
 
 stop_words = set(stopwords.words('english'))
-stemmer = LancasterStemmer()
+stemmer = nltk.stem.lancaster.LancasterStemmer()
 
 # unicodify(): will encode text as per unicode format
 def unicodify(word):

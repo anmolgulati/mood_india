@@ -2,8 +2,8 @@
 # from load_sentiment import *
 from twitterstream import *
 import csv
-from normalize import *
-from comparingSentimentMethods import *
+from tools.Sanitize.normalize import *
+from tools.Sentiment.SentiWordNet.SentimentHelper import *
 
 scoreOfStates={}
 geocode = {}
@@ -136,17 +136,17 @@ def initializeScoreDictionary():
 		stateName=line[0:5]
 		scoreOfStates[stateName]=(0,0)
 
-def initializeGeoCode() :
-	global geocode
-	filename="bounding_box.csv"
-	with open(filename,'rb') as f :
-		csvreader = csv.reader(f, delimiter=',', quotechar='|')
-		for row in csvreader:
-			fi = (float(row[1]),float(row[2]))
-			la = (float(row[3]),float(row[4]))
-			geocode[row[0]] = (fi,la)
-			# print row
-	# print geocode
+# def initializeGeoCode() :
+# 	global geocode
+# 	filename="bounding_box.csv"
+# 	with open(filename,'rb') as f :
+# 		csvreader = csv.reader(f, delimiter=',', quotechar='|')
+# 		for row in csvreader:
+# 			fi = (float(row[1]),float(row[2]))
+# 			la = (float(row[3]),float(row[4]))
+# 			geocode[row[0]] = (fi,la)
+# 			# print row
+# 	# print geocode
 
 def main():
 	global scoreOfStates

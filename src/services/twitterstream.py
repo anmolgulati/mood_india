@@ -3,8 +3,6 @@
 import oauth2 as oauth
 import urllib2 as urllib
 import json
-from sentiment import *
-from load_sentiment import *
 
 api_key = "avngLhaJFPziKYQkI4bJqobfY"
 api_secret = "qqdYCAH2etbI2rOHBXmlbTk1rXNK5TGAnDXPAnEG3xSNIe4VG2"
