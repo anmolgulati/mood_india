@@ -1,13 +1,13 @@
+
 # from sentiment import *
 # from load_sentiment import *
-from twitterstream import *
+from services.twitterstream import  *
 import csv
 from tools.Sanitize.normalize import *
 from tools.Sentiment.SentiWordNet.SentimentHelper import *
 
 scoreOfStates={}
 geocode = {}
-# Work - Figure out how to have the data structure to support past 24 hours and whole database results
 def checkLiesInIndia(TweetInfo) :
 	if TweetInfo.has_key("place"):
 			if TweetInfo["place"].has_key("country_code"):
@@ -15,7 +15,8 @@ def checkLiesInIndia(TweetInfo) :
 				return True
 	return False
 
-def writeTweetData(TweetInfo):  # Figure out the best way to store the data as we procure it
+#TODO Figure out the best way to store the data as we procure it
+def writeTweetData(TweetInfo):
 	filename="tweetData.csv"
 	with open(filename,'a') as csv_file :
 		writer = csv.writer(csv_file,delimiter=',')
@@ -25,7 +26,7 @@ def writeTweetData(TweetInfo):  # Figure out the best way to store the data as w
 		else :
 			listOfitems.append("")
 
-def writeTweetData(TweetInfo):  # Figure out the best way to store the data as we procure it
+def writeTweetData(TweetInfo):
 	filename="tweetData.csv"
 	with open(filename,'a') as csv_file :
 		writer = csv.writer(csv_file,delimiter=', ')
@@ -128,13 +129,16 @@ def addTweetScore(TweetInfo,tweetScore):
 	else:
 		print "coordinates not found"
 
-def initializeScoreDictionary():
-	global scoreOfStates
-	lines = [line.strip() for line in open('statesNames.txt')]
-	for line in lines:
-		indexi=5
-		stateName=line[0:5]
-		scoreOfStates[stateName]=(0,0)
+
+### Redundant Code, will be replaced in next commit.
+
+# def initializeScoreDictionary():
+# 	global scoreOfStates
+# 	lines = [line.strip() for line in open('statesNames.txt')]
+# 	for line in lines:
+# 		indexi=5
+# 		stateName=line[0:5]
+# 		scoreOfStates[stateName]=(0,0)
 
 # def initializeGeoCode() :
 # 	global geocode
@@ -150,14 +154,7 @@ def initializeScoreDictionary():
 
 def main():
 	global scoreOfStates
-	initializeScoreDictionary()
-	# sentiDictionary=sentiReadWord('SentiWordNet_3.0.0_20100705.txt')
-	# bingNegativeWords=bingReadWords('negative-words.txt')
-	# bingPositiveWords=bingReadWords('positive-words.txt')
-	# print bingPositiveWords
-	affinDictionary = affinReadwords('AFINN-111.txt')
 	i = 0
-	initializeGeoCode()
 	print scoreOfStates
 	with open("twits.txt") as f:
 		for line in f:
@@ -171,7 +168,7 @@ def main():
 					listOfTokens= normalize(TweetInfo['text'])
 					print listOfTokens
 					print ""
-					tweetScore = affinCalculateSentiment(listOfTokens,affinDictionary)
+					tweetScore = SentimentHelper.calculate(listOfTokens);
 					print tweetScore 
 					print type(tweetScore)
 					print ""
