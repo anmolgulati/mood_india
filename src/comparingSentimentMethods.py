@@ -90,10 +90,10 @@ def sentiCalculateSentiment(listOfTokens,sentiDictionary):
 		negScore=0
 		posScore=0
 		tag=get_wordnet_pos(token[1])
-		synset_list = wn.synsets(token[0],tag)
+		synset_list = wn.synsets(token[0])
 		for synset in synset_list:
-			pos = synset.pos
-			offset = synset.offset
+			pos = synset.pos()
+			offset = synset.offset()
 			if (pos, offset) in sentiDictionary:
 				pos_score, neg_score = sentiDictionary[(pos, offset)]
 				if pos_score>neg_score:
