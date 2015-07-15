@@ -1,10 +1,9 @@
 
 # from sentiment import *
 # from load_sentiment import *
-from services.twitterstream import  *
 import csv
 from tools.Sanitize.normalize import *
-from tools.Sentiment.SentiWordNet.SentimentHelper import *
+import tools.Sentiment.SentiWordNet.SentimentHelper
 
 scoreOfStates={}
 geocode = {}
@@ -154,6 +153,12 @@ def addTweetScore(TweetInfo,tweetScore):
 
 def main():
 	global scoreOfStates
+	# initializeScoreDictionary()
+	# sentiDictionary=sentiReadWord('SentiWordNet_3.0.0_20100705.txt')
+	# bingNegativeWords=bingReadWords('negative-words.txt')
+	# bingPositiveWords=bingReadWords('positive-words.txt')
+	# print bingPositiveWords
+	# affinDictionary = affinReadwords('AFINN-111.txt')
 	i = 0
 	print scoreOfStates
 	with open("twits.txt") as f:
@@ -169,10 +174,10 @@ def main():
 					print listOfTokens
 					print ""
 					tweetScore = SentimentHelper.calculate(listOfTokens);
-					print tweetScore 
+					print tweetScore
 					print type(tweetScore)
 					print ""
-					addTweetScore(TweetInfo,tweetScore)
+					# addTweetScore(TweetInfo,tweetScore)
 					print scoreOfStates
 					print "done"	
 			except:

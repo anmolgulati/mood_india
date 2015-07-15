@@ -44,10 +44,10 @@ class SentimentHelper:
             negScore=0
             posScore=0
             tag = self.getWordNetPos(token[1])
-            synset_list = wn.synsets(token[0],tag)
+            synset_list = wn.synsets(token[0])
             for synset in synset_list:
-                pos = synset.pos
-                offset = synset.offset
+                pos = synset.pos()
+                offset = synset.offset()
                 if (pos, offset) in self._dictOfWordNet:
                     pos_score, neg_score = self._dictOfWordNet[(pos, offset)]
                 if pos_score>neg_score:
