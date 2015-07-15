@@ -5,6 +5,11 @@ from services.twitterstream import  *
 import csv
 from tools.Sanitize.normalize import *
 from tools.Sentiment.SentiWordNet.SentimentHelper import *
+import zeromq
+
+context = zmq.Context();
+consumer = context.socket(zmq.PULL)
+consumer.connect("tcp://0.0.0.0:9998")
 
 scoreOfStates={}
 geocode = {}
@@ -156,28 +161,25 @@ def main():
 	global scoreOfStates
 	i = 0
 	print scoreOfStates
-	with open("twits.txt") as f:
-		for line in f:
-			if i == 20:
-				break
-			# print line
-			try:
-				TweetInfo = json.loads(line)
-				if checkLiesInIndia(TweetInfo) & TweetInfo.has_key('text'):
-					i+=1
-					listOfTokens= normalize(TweetInfo['text'])
-					print listOfTokens
-					print ""
-					tweetScore = SentimentHelper.calculate(listOfTokens);
-					print tweetScore 
-					print type(tweetScore)
-					print ""
-					addTweetScore(TweetInfo,tweetScore)
-					print scoreOfStates
-					print "done"	
-			except:
-				print "Exception found"
-				pass
+	with True:
+		# print line
+		try:
+			TweetInfo = consumer.recv_json();
+			if checkLiesInIndia(TweetInfo) & TweetInfo.has_key('text'):
+				i+=1
+				listOfTokens= normalize(TweetInfo['text'])
+				print listOfTokens
+				print ""
+				tweetScore = SentimentHelper.calculate(listOfTokens);
+				print tweetScore 
+				print type(tweetScore)
+				print ""
+				addTweetScore(TweetInfo,tweetScore)
+				print scoreOfStates
+				print "done"	
+		except:
+			print "Exception found"
+			pass
 
 	print scoreOfStates
 
